@@ -1,7 +1,7 @@
-import { connectMongoDB } from "./config/mongoDB";
+import { startServer } from "./server";
 
-const startC = async () => {
-  const resultConnection = await connectMongoDB()
-  console.log(resultConnection)
+const main = async () => { 
+await startServer()
 }
-startC()
+
+main()
