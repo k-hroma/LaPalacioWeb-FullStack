@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { QueryResponse } from "../types/queryResponse"
 import { Book } from "../models/bookModel"
-import { AddBookSchema } from "../schemas/bookSchema";
+import { AddBookBody, AddBookSchema, UpdateBookBody, UpdateBookSchema } from "../schemas/bookSchema";
 
 const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   try {
@@ -20,7 +20,7 @@ const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFu
   }
 };
 
-const addBook = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
+const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const parseResult = AddBookSchema.safeParse(req.body)
   
  if (!parseResult.success) {
@@ -60,20 +60,36 @@ const addBook = async (req: Request, res: Response<QueryResponse>, next: NextFun
   }
  }
 
-const updateBook = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
+const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const { id } = req.params
-  const { isbn, title, writer, editorial, price, stock } = req.body
-  // validaciones con zod
-  if (!id) { return}
-  if (!req.body) { return }
-  const dataBook = { isbn, title, writer, editorial, price, stock }
+  const parseResult = UpdateBookSchema.safeParse(req.body);
+   if (!parseResult.success) {
+    res.status(400).json({
+      success: false,
+      message: "Invalid input data",
+      error: parseResult.error.errors
+    });
+    return;
+  }
+
+  const { isbn, title, writer, editorial, price, stock } = parseResult.data;
+  
   try {
-    const updatedBook = await Book.findByIdAndUpdate(id, dataBook, { new: true })
+    const updatedBook = await Book.findByIdAndUpdate(id, parseResult.data, { new: true });
+    if (!updatedBook) {
+      res.status(404).json({
+        success: false,
+        message: `Book with ID ${id} not found.`}
+      );
+    return;
+    };
+
     res.status(200).json({
       success: true,
       message: "Book successfully updated",
       data: updatedBook
-    })
+    });
+    return
     
   } catch (error:unknown) {
     next(error)
