@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import { handleError } from './middleware/handleErrors'
 import { bookRouter } from './routes/booksRoutes'
+import { usersRouter } from './routes/authRoutes'
 
 
 const app = express()
@@ -10,7 +11,7 @@ app.use(cors())
 
 app.use("/api/books", bookRouter)
 // app.use("/api/writers", writersRouter)
-// app.use("/api/users", usersRouter)
+app.use("/api/users", usersRouter)
 
 
 
