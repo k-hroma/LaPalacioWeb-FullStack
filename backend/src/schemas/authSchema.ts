@@ -14,5 +14,13 @@ const RegisterSchemaUser = z.object({
 
 type registerUserBody = z.infer<typeof RegisterSchemaUser>;
 
+export { registerUserBody, RegisterSchemaUser }
 
-export {registerUserBody, RegisterSchemaUser }
+const LoginSchemaUser = z.object({
+  email: z.string().email("Debe ser un email válido"),
+  password: z.string().min(1, "La contraseña es obligatoria")
+}).strict();
+
+type loginUserBody = z.infer<typeof LoginSchemaUser>;
+
+export { loginUserBody, LoginSchemaUser };

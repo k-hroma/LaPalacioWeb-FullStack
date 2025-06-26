@@ -32,10 +32,10 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
     return;
   }
 
-  const { isbn, title, writer, editorial, price, stock } = parseResult.data;
+  const dataBook = parseResult.data;
 
   try {
-    const newBook = await new Book(parseResult.data).save()
+    const newBook = await new Book(dataBook).save()
     
     res.status(201).json({
       success: true,
@@ -48,7 +48,7 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
     if ((error as any ).code === 11000) {
     res.status(409).json({
       success: false,
-      message: "El ISBN ya existe en la base de datos",
+      message: "The ISBN already exists in the database",
       error: 11000
   });
   return;
@@ -72,10 +72,10 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
     return;
   }
 
-  const { isbn, title, writer, editorial, price, stock } = parseResult.data;
+  const updateDataBook = parseResult.data;
   
   try {
-    const updatedBook = await Book.findByIdAndUpdate(id, parseResult.data, { new: true });
+    const updatedBook = await Book.findByIdAndUpdate(id, updateDataBook, { new: true });
     if (!updatedBook) {
       res.status(404).json({
         success: false,
