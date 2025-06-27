@@ -43,12 +43,12 @@ const connectMongoDB = async ():Promise<ConnectResults>=> {
     
     connectMDB.isConnected = true
 
-    resultConnection.connection.on('disconected', () => {
+    resultConnection.connection.on('disconnected', () => {
       connectMDB.isConnected = false;
       console.warn("MongoDB connection lost")
     })
     
-    resultConnection.connection.on('reconected', () => { 
+    resultConnection.connection.on('reconnected', () => { 
       connectMDB.isConnected = true;
       console.info("MongoDB connection reestablished.")
     })

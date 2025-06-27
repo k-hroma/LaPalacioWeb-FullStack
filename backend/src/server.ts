@@ -34,6 +34,7 @@ const startServer = async ():Promise<ConnectResults> => {
       console.log(`API Writes available at: ${apiUrlWriters}`)
     });
 
+    // app.listen() siempre devuelve un Server válido o lanza un error. Esa verificación no es útil.
     if (!listenPort) { 
       throw new Error("Server connection failed")
     }

@@ -41,8 +41,9 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction): 
     }
     next()
     
-  } catch (error) {
+  } catch (error:unknown) {
 
+    next(error)
     
   }
  }

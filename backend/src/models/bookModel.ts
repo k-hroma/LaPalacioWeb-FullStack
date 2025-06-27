@@ -13,6 +13,6 @@ const bookSchema = new Schema<IBook>({
   stock: {type: Number, required:true,}
 }, {versionKey:false,  timestamps: true,})
 
-const Book = model<IBook>("BooK", bookSchema)
+const Book = model<IBook>("Book", bookSchema)
 
 export { Book }
