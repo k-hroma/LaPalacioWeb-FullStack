@@ -16,10 +16,7 @@ type AddBookBody = z.infer<typeof AddBookSchema>;
 const UpdateBookSchema = z.object({
   isbn: z.number().optional(),
   title: z.string().min(1).optional(),
-  writer: z.object({
-    firstName: z.string().min(1),
-    lastName: z.string().min(1)
-  }).optional(),
+  writer: WriterSchema.optional(),
   editorial: z.string().min(1).optional(),
   price: z.number().nonnegative().optional(),
   stock: z.number().int().nonnegative().optional()
