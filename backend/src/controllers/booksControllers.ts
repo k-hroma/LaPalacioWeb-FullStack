@@ -14,7 +14,7 @@ const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFu
     });
     return
     
-  } catch (error) {
+  } catch (error:unknown) {
     next(error)
     return
   }
