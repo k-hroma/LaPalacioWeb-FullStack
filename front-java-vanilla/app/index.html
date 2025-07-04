@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <section class="books">
+    <h1>Book Form</h1>
+      <div class="book-form-container">
+        <form class="form-book" id="bookForm">
+
+        <label for="isbn">ISBN</label>
+        <input type="number" name="isbn" id="isbn" value="">
+
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" value="">
+
+        <label for="writerFirstName">Writer First Name</label>
+        <input type="text" name="writerFirstName" id="writerFirstName" value="">
+
+        <label for="writerLastName">Writer Last Name</label>
+        <input type="text" name="writerLastName" id="writerLastName" value="">
+
+
+        <label for="editorial">Editorial</label>
+        <input type="text" name="editorial" id="editorial" value="">
+
+        <label for="price">Price</label>
+        <input type="number" name="price" id="price" value="">
+
+        <label for="stock">Stock</label>
+        <input type="number" name="stock" id="stock" value="">
+
+        <button id="btnCrear" class="book-btn-form" type="submit">Crear</button>
+        </form>
+      </div>
+    <h3>Libros</h3>
+      <div class="book-container" id="gridBook">
+      </div>
+  </section>
+  <div class="user">
+    <section class="register">
+      <h2>User Form</h2>
+        <div class="user-form-container">
+          <form action="" class="form-user" id="user-form">
+            <label for="name">Name User: </label>
+            <input type="text" id="name" value="">
+            <label for="email">Email user: </label>
+            <input type="email" id="email" value="">
+            <label for="password">Password</label>
+            <input type="password" id="password" value="">
+            <button class="user-btn-form">Register</button>
+          </form>
+        </div>
+  
+    
+    </section>
+  
+    <section class="login">
+      <h2>User Form</h2>
+        <div class="user-form-container">
+          <form action="" class="form-user" id="logForm">
+            <label for="logEmail">Email user: </label>
+            <input type="email" id="logEmail", value="">
+            <label for="logPass">Password</label>
+            <input type="password" id="logPass" value="">
+            <button class="user-btn-form">Login</button>
+          </form>
+        </div>  
+    </section>
+  </div>
+
+  
+  
+<script type="module" src="./app.js"></script>  
+</body>
+</html>
+

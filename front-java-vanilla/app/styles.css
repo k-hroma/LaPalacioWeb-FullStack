@@ -1,0 +1,26 @@
+.book-form-container, .user-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-book, .form-user {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.form-user {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.book-btn-form, .user-btn-form {
+  margin-top: 1rem;
+  background-color: rgb(119, 119, 244);
+}
+
+.user { 
+  display: flex;
+  flex-direction: row;
+}

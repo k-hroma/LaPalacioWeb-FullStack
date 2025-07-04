@@ -1,0 +1,57 @@
+[
+  {
+    "isbn": 9789877389185,
+    "title": "Los días de la sombra",
+    "writer": {
+      "firstName": "Liliana",
+      "lastName": "Bodoc"
+    },
+    "editorial": "Alfaguara",
+    "price": 8990,
+    "stock": 12
+  },
+  {
+    "isbn": 9789500720869,
+    "title": "El entenado",
+    "writer": {
+      "firstName": "Juan José",
+      "lastName": "Saer"
+    },
+    "editorial": "Seix Barral",
+    "price": 7290,
+    "stock": 5
+  },
+  {
+    "isbn": 9789871673839,
+    "title": "Catedrales",
+    "writer": {
+      "firstName": "Claudia",
+      "lastName": "Piñeiro"
+    },
+    "editorial": "Alfaguara",
+    "price": 7650,
+    "stock": 20
+  },
+  {
+    "isbn": 9789874087664,
+    "title": "Nuestra parte de noche",
+    "writer": {
+      "firstName": "Mariana",
+      "lastName": "Enríquez"
+    },
+    "editorial": "Anagrama",
+    "price": 9800,
+    "stock": 8
+  },
+  {
+    "isbn": 9789878000485,
+    "title": "El Aleph",
+    "writer": {
+      "firstName": "Jorge Luis",
+      "lastName": "Borges"
+    },
+    "editorial": "Emecé",
+    "price": 6500,
+    "stock": 15
+  }
+]

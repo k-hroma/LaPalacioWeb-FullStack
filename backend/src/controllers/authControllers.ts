@@ -129,22 +129,21 @@ const loginUser = async (req: Request<{}, {}, loginUserBody>, res: Response, nex
       return
     }
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "5m" })
+    const token = jwt.sign(payload, secretKey, { expiresIn: "100m" })
     console.log(token)
 
 
     res.status(200).json({
       success: true,
       message: "User successfully logged in",
+      token,
       data: {
         id: logUser._id,
         name: logUser.name,
         email: logUser.email,
       },
     })
-    
-
-
+    return
     
   } catch (error: unknown) {
     next(error)
