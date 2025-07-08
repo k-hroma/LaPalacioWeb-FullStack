@@ -1,39 +1,48 @@
 import { useEffect, useState } from 'react';
 import { Layout } from '../layouts/Layout'
+import { getRequest, deleteRequest, patchRequest } from '../services/booksServices.js';
+import { useAuth } from '../context/AuthContext.jsx';
 const Home = () => { 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWVmZTZiOWVhMzBmOGIxOTliNjY3ZiIsIm5hbWUiOiJLcm9hYW0iLCJlbWFpbCI6Imtyb21hczEyM0BnbWFpbC5jb20iLCJpYXQiOjE3NTE2NjEyODIsImV4cCI6MTc1MTY2NzI4Mn0.Jyt1nFonW13zHvtlNwsZagYcxF9605bnUhw5lBOqo3k"
-  const URL_API = "http://localhost:1234/api/books";
+  const { user } = useAuth()
   const [books, setBooks] = useState([])
+  const [error, setError] = useState("")
 
   const getBooks = async () => {
     try {
-      // const token = localStorage.getItem("token");
-      const fetchBooks = await fetch(URL_API, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const response = await fetchBooks.json()
-      if (!response.success) {
-        throw new Error(response.message)
-      }
-      const books = response.data
+      const books = await getRequest()
       setBooks(books)
-      console.log(books)
+
     } catch (error) {
       const errMsg =
-        error instanceof Error ? error.message : "Unexpected error";
+      error instanceof Error ? error.message : "Unexpected error";
       console.error(errMsg);
-      return {
-        success: false,
-        message: errMsg,
-      };
+      setError(errMsg)
     };
   };
 
-  useEffect(() => {getBooks() }, [])
+  const handleDelete = async (id) => {
+    const confirmed = confirm("¿Estás seguro de borrar el producto?");
+    if (!confirmed) return;
+    try {
+      const resDeleteBook = await deleteRequest(id)
+      if (!resDeleteBook.success) {
+        alert("Error: libro no borrado")
+        return
+      } else {
+        alert(resDeleteBook.message)
+        await getBooks()
+      }
+    } catch (error) {
+      const errMsg = error instanceof Error ? error.message : "Unknown error";
+      console.error(errMsg); 
+    }
+  }
+  
+  const handleUpdate = (dataBook, id) => {
+
+   }
+
+  useEffect(() => { getBooks() }, [])
 
   return (
     <>
@@ -45,10 +54,16 @@ const Home = () => {
               <div key={book._id}>
                 <p>ISBN: {book.isbn}</p>
                 <p>Título: {book.title}</p>
-                <p>Apellido: {book.writer.lastName }</p>
+                <p>Apellido: {book.writer.lastName}</p>
+                {user &&
+                  <div>
+                    <button type='button' onClick={handleUpdate}>Update</button>
+                    <button type='button' onClick={() => handleDelete(book._id)}>Delete</button>
+                  </div>}
               </div>
             ))
           }
+          {error && <p>{ error }</p>}
         </section>
       </Layout>
       
