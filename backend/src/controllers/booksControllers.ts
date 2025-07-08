@@ -53,8 +53,6 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
   });
   return;
 }
-
-
     next(error)
     return
   }
