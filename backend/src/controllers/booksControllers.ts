@@ -2,10 +2,12 @@ import { Request, Response, NextFunction } from "express"
 import { QueryResponse } from "../types/queryResponse"
 import { Book } from "../models/bookModel"
 import { AddBookBody, AddBookSchema, UpdateBookBody, UpdateBookSchema } from "../schemas/bookSchema";
+import { IBook } from "../types/bookInterface";
+import mongoose from "mongoose";
 
 const getBooks = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   try {
-    const books = await Book.find()
+    const books:IBook[] = await Book.find()
     
     res.status(200).json({
       success: true,
@@ -60,6 +62,24 @@ const addBook = async (req: Request<{}, {}, AddBookBody>, res: Response<QueryRes
 
 const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const { id } = req.params
+    if (!id) {
+    const errMsg = "Book ID is required."
+    res.status(400).json({
+      success: false,
+      message: errMsg
+    })
+    console.error(errMsg)
+    return
+  };
+
+  // verificar que el ID tenga el formato correcto
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({
+    success: false,
+    message: "Invalid ID format"
+  })
+  return
+  };
   const parseResult = UpdateBookSchema.safeParse(req.body);
    if (!parseResult.success) {
     res.status(400).json({
@@ -97,7 +117,7 @@ const updateBook = async (req: Request<{ id: string }, {}, UpdateBookBody>, res:
 
  }
 
-const deleteBook = async (req: Request, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
+const deleteBook = async (req: Request<{ id: string }>, res: Response<QueryResponse>, next: NextFunction): Promise<void> => {
   const { id } = req.params
   if (!id) { 
     const errMsg = "Book ID is required."
@@ -107,7 +127,15 @@ const deleteBook = async (req: Request, res: Response<QueryResponse>, next: Next
     })
     console.error(errMsg)
     return
-  }
+  };
+    
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({
+    success: false,
+    message: "Invalid ID format"
+  })
+  return
+  };
   
   try {
 
@@ -115,7 +143,7 @@ const deleteBook = async (req: Request, res: Response<QueryResponse>, next: Next
     if (!deletedBook) {
         res.status(404).json({
         success: false,
-        message: `❌ Book with ID ${id} not found.`
+        message: `Book with ID ${id} not found.`
         });
       return;
       }

@@ -1,5 +1,6 @@
 // crear y usar un contexto
 import { createContext, useContext, useState } from "react"; 
+// npm install jwt-decode
 import { jwtDecode } from "jwt-decode"
 
 
@@ -7,10 +8,14 @@ import { jwtDecode } from "jwt-decode"
 const AuthContext = createContext()
 
 // funcion que va a proveer un token/usuario (es de alcance global)
+// el children es para poder envlver mi RouterApp
 const AuthProvider = ({ children }) => {
+  // token
   const [token, setToken] = useState(null)
+  // usuario
   const [user, setUser] = useState(null)
 
+  // handleToken->guarda el token
   const handleToken = (token) => { 
     if (token !== undefined) {
     localStorage.setItem("token", token);

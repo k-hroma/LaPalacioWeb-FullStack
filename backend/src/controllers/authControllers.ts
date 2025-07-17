@@ -69,6 +69,7 @@ const registerUser = async (req: Request<{}, {}, registerUserBody>, res: Respons
         success: false,
         message: "User name or email already registered."
       })
+      return; // <-- IMPORTANTE
     }
     next(error)
     
